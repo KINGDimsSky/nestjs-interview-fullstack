@@ -1,0 +1,80 @@
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+    <div>
+        <h1 class="text-4xl font-extrabold tracking-tight mb-2 text-white">Transactions</h1>
+        <p class="text-zinc-400 font-medium">Monitoring operasional laundry secara real-time.</p>
+    </div>
+    <a href="/laundry/create" class="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3.5 rounded-2xl font-bold shadow-xl shadow-indigo-600/20 transition-all active:scale-95 text-center">
+        + New Order
+    </a>
+</div>
+
+<div class="bg-zinc-900/50 border border-zinc-800 rounded-3xl overflow-hidden backdrop-blur-md shadow-2xl">
+    <table class="w-full text-left border-collapse">
+        <thead class="bg-zinc-900/80 border-b border-zinc-800">
+            <tr>
+                <th class="px-8 py-5 text-xs font-bold text-zinc-500 uppercase tracking-widest">Client</th>
+                <th class="px-8 py-5 text-xs font-bold text-zinc-500 uppercase tracking-widest text-center">Weight</th>
+                <th class="px-8 py-5 text-xs font-bold text-zinc-500 uppercase tracking-widest text-center">Price</th>
+                <th class="px-8 py-5 text-xs font-bold text-zinc-500 uppercase tracking-widest text-center">Status</th>
+                <th class="px-8 py-5 text-xs font-bold text-zinc-500 uppercase tracking-widest text-right">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-zinc-800">
+            {{#each transactions}}
+            <tr class="hover:bg-zinc-800/40 transition-colors group">
+                <td class="px-8 py-6">
+                    <div class="font-bold text-zinc-100 text-lg">{{this.customer.name}}</div>
+                    <div class="text-xs text-zinc-500 font-mono mt-1 uppercase tracking-tighter">TRX-{{this.id}}</div>
+                </td>
+                <td class="px-8 py-6 text-zinc-300 font-medium text-center">{{this.weight}} kg</td>
+                <td class="px-8 py-6 text-indigo-400 font-bold text-center">Rp {{this.price}}</td>
+                <td class="px-8 py-6">
+                    <div class="flex justify-center">
+                        <span class="px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full border
+                            {{#if (eq this.status 'DONE')}} bg-emerald-500/10 text-emerald-400 border-emerald-500/20 
+                            {{else if (eq this.status 'WASHING')}} bg-indigo-500/10 text-indigo-400 border-indigo-500/20 
+                            {{else}} bg-zinc-800 text-zinc-500 border-zinc-700 {{/if}}">
+                            {{this.status}}
+                        </span>
+                    </div>
+                </td>
+                <td class="px-8 py-6 text-right">
+                    <div class="flex justify-end gap-3">
+                        <a href="/laundry/edit/{{this.id}}" class="px-4 py-2 bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 rounded-xl hover:bg-indigo-600 hover:text-white transition-all text-sm font-bold">Edit</a>
+                        <button onclick="openDeleteModal('{{this.id}}', 'Pesanan {{this.customer.name}}', 'laundry')" class="px-4 py-2 bg-red-600/10 text-red-400 border border-red-500/20 rounded-xl hover:bg-red-600 hover:text-white transition-all text-sm font-bold">Hapus</button>
+                    </div>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+{{!-- Delete Modal --}}
+<div id="deleteModal" class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-xl flex items-center justify-center p-4">
+    <div class="bg-zinc-900 border border-zinc-800 rounded-[2.5rem] max-w-sm w-full p-10 text-center shadow-2xl">
+        <div class="w-20 h-20 bg-red-500/10 text-red-500 rounded-3xl flex items-center justify-center mx-auto mb-6 border border-red-500/20">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-2">Delete Entry?</h3>
+        <p class="text-zinc-500 text-sm mb-8 leading-relaxed">Konfirmasi penghapusan <span id="deleteItemName" class="text-zinc-200 font-bold"></span> secara permanen.</p>
+        <form id="deleteForm" method="POST" class="flex gap-4">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="button" onclick="closeDeleteModal()" class="flex-1 px-6 py-4 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-2xl font-bold transition-all">Batal</button>
+            <button type="submit" class="flex-1 px-6 py-4 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-bold shadow-lg shadow-red-600/20 transition-all">Hapus</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById('deleteModal');
+    const deleteForm = document.getElementById('deleteForm');
+    const deleteItemName = document.getElementById('deleteItemName');
+    function openDeleteModal(id, name, type) {
+        deleteForm.action = `/${type}/${id}?_method=DELETE`;
+        deleteItemName.innerText = name;
+        modal.classList.remove('hidden');
+    }
+    function closeDeleteModal() { modal.classList.add('hidden'); }
+    window.onclick = (e) => { if(e.target == modal) closeDeleteModal() };
+</script>

@@ -1,0 +1,69 @@
+<div class="max-w-2xl mx-auto">
+    <div class="mb-10 flex items-center gap-4">
+        <a href="/laundry" class="p-3 bg-zinc-900 border border-zinc-800 rounded-2xl hover:bg-zinc-800 transition text-zinc-400 group">
+            <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        </a>
+        <div>
+            <h1 class="text-3xl font-bold text-white tracking-tight">New Order</h1>
+            <p class="text-sm text-zinc-500 mt-1">Input transaksi laundry pelanggan baru.</p>
+        </div>
+    </div>
+
+    <div class="bg-zinc-900 border border-zinc-800 rounded-[2.5rem] p-10 shadow-2xl">
+        <form action="/laundry" method="POST" class="space-y-8">
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Select Client</label>
+                <div class="relative">
+                    <select name="customerId" required 
+                            class="w-full bg-zinc-950 border border-zinc-800 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-indigo-600 outline-none text-zinc-100 appearance-none">
+                        <option value="" disabled selected>-- Pilih Nama Pelanggan --</option>
+                        {{#each customers}}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                    <div class="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-500">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6">
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Weight (kg)</label>
+                    <input type="number" step="0.1" name="weight" id="weight" required placeholder="0.0"
+                        class="w-full bg-zinc-950 border border-zinc-800 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-indigo-600 outline-none text-zinc-100 placeholder:text-zinc-700">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Total Price (Rp)</label>
+                    <input type="number" name="price" id="price" required placeholder="0"
+                        class="w-full bg-zinc-950 border border-zinc-800 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-indigo-600 outline-none text-zinc-100 placeholder:text-zinc-700">
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <label class="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Process Status</label>
+                <div class="grid grid-cols-3 gap-3">
+                    <label class="relative flex items-center justify-center p-4 bg-zinc-950 border border-zinc-800 rounded-2xl cursor-pointer hover:bg-zinc-800 transition group">
+                        <input type="radio" name="status" value="PENDING" checked class="sr-only peer">
+                        <span class="text-xs font-bold text-zinc-500 peer-checked:text-indigo-400 uppercase">Pending</span>
+                        <div class="absolute inset-0 border-2 border-transparent peer-checked:border-indigo-600 rounded-2xl pointer-events-none transition-all"></div>
+                    </label>
+                    <label class="relative flex items-center justify-center p-4 bg-zinc-950 border border-zinc-800 rounded-2xl cursor-pointer hover:bg-zinc-800 transition group">
+                        <input type="radio" name="status" value="WASHING" class="sr-only peer">
+                        <span class="text-xs font-bold text-zinc-500 peer-checked:text-indigo-400 uppercase">Washing</span>
+                        <div class="absolute inset-0 border-2 border-transparent peer-checked:border-indigo-600 rounded-2xl pointer-events-none transition-all"></div>
+                    </label>
+                    <label class="relative flex items-center justify-center p-4 bg-zinc-950 border border-zinc-800 rounded-2xl cursor-pointer hover:bg-zinc-800 transition group">
+                        <input type="radio" name="status" value="DONE" class="sr-only peer">
+                        <span class="text-xs font-bold text-zinc-500 peer-checked:text-indigo-400 uppercase">Done</span>
+                        <div class="absolute inset-0 border-2 border-transparent peer-checked:border-indigo-600 rounded-2xl pointer-events-none transition-all"></div>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-5 rounded-2xl font-bold shadow-xl shadow-indigo-600/20 transition-all active:scale-[0.98]">
+                Submit Transaction
+            </button>
+        </form>
+    </div>
+</div>
