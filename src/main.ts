@@ -6,6 +6,8 @@ import { join } from 'path';
 import methodOverride = require('method-override');
 import { ValidationPipe } from '@nestjs/common';
 import { GlobalExceptionFilter } from './common/filters/http-exception.filter';
+import cookieParser from 'cookie-parser';
+import { UserInterceptor } from './common/interceptors/user.interceptor';
 
 const hbs = require('hbs');
 
@@ -20,13 +22,14 @@ async function bootstrap() {
     whitelist : true,
   }))
 
+  app.useGlobalInterceptors(new UserInterceptor());
+
   app.useGlobalFilters(new GlobalExceptionFilter());
-  
+  app.use(cookieParser());
 
   hbs.registerHelper('eq', function (a, b) {
     return a === b;
   });
-  // --
 
   await app.listen(process.env.PORT ?? 3000);
   console.log(`Application is running on: ${await app.getUrl()}`);

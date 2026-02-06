@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Render, Redirect, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Render, Redirect, Query, UseGuards } from '@nestjs/common';
 import { LaundryService } from './laundry.service';
 import { CreateLaundryDto } from './dto/create-laundry.dto';
 import { UpdateLaundryDto } from './dto/update-laundry.dto';
+import { JwtAuthGuard } from 'src/middlewares/jwt.auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('laundry')
 export class LaundryController {
   constructor(private readonly laundryService: LaundryService) {}
@@ -11,7 +13,7 @@ export class LaundryController {
   @Render('laundry')
   async findAll(@Query('search') searchQuery ?: string) {
     const transactions = await this.laundryService.findAll(searchQuery);
-    
+
     return {
       title : 'Dashboard Laundry',
       transactions : transactions,

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | KING LAUNDRY</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen">
+  <div class="min-h-[80vh] flex items-center justify-center">
+    <div class="w-full max-w-md">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl font-black text-white tracking-tighter">Welcome To Laundry Dashboard</h1>
+            <p class="text-zinc-500 mt-2 font-medium text-sm">Silakan login untuk akses Dashboard Laundry.</p>
+        </div>
+
+        <div class="bg-zinc-900 border border-zinc-800 rounded-[2.5rem] p-10 shadow-2xl backdrop-blur-md">
+            <form action="login" method="POST" class="space-y-6">
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Username</label>
+                    <input type="text" id="username" name="username" required 
+                        class="w-full bg-zinc-950 border border-zinc-800 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-indigo-600 outline-none text-white transition-all">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Password</label>
+                    <input type="password" id="password" name="password" required 
+                        class="w-full bg-zinc-950 border border-zinc-800 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-indigo-600 outline-none text-white transition-all">
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-5 rounded-2xl font-bold shadow-xl shadow-indigo-600/20 transition-all active:scale-[0.98]">
+                    Login
+                </button>
+            </form>
+            <div class="mt-8 text-center">
+                <a href="/auth/register" class="text-xs font-bold text-zinc-500 hover:text-emerald-400 transition uppercase tracking-widest">Already have access? Login</a>
+            </div>
+        </div>
+    </div>
+  </div>
+</body>

@@ -25,7 +25,7 @@ model Customer {
   name         String
   phone        String
   address      String?
-  transactions Transaction[] // Relasi One-to-Many
+  transactions Transaction[] 
   createdAt    DateTime      @default(now())
 }
 
@@ -33,10 +33,20 @@ model Transaction {
   id          Int      @id @default(autoincrement())
   weight      Float
   price       Float
-  status      String   @default("PENDING") // PENDING, WASHING, DONE
+  status      String   @default("PENDING") 
   customerId  Int
   customer    Customer @relation(fields: [customerId], references: [id])
   createdAt   DateTime @default(now())
 }
 
+model ActivityLog {
+  id        Int      @id @default(autoincrement())
+  adminId   Int?     // Siapa yang melakukan (null jika sistem)
+  action    String   // "CREATE", "UPDATE", "DELETE"
+  entity    String   // "Customer" atau "Transaction"
+  entityId  Int
+  oldData   String?  // JSON string data sebelum berubah
+  newData   String?  // JSON string data sesudah berubah
+  createdAt DateTime @default(now())
+}
 
