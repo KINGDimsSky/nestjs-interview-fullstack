@@ -28,7 +28,6 @@ export class CustomersController {
   @Render('customers/create')
   async createCustomer() {
     const customers = await this.customersService.findAll();
-    console.log ('Data pelanggan berhasil didapatkan', customers)
 
     return {
       message : 'Tambah Pelanggan Baru',
@@ -44,7 +43,6 @@ export class CustomersController {
 
     if (!customer) {
       throw new NotFoundException(`Pelanggan dengan ID ${id} tidak ditemukan`);
-
     }
 
     return {

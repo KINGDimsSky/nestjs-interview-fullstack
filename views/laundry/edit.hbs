@@ -12,7 +12,7 @@
             <div class="text-xl font-bold text-zinc-100">{{transaction.customer.name}}</div>
         </div>
 
-        <form action="/laundry/update/{{transaction.id}}?_method=PATCH" method="POST" class="space-y-8">
+        <form action="/laundry/{{transaction.id}}?_method=PATCH" method="POST" class="space-y-8">
             <div class="grid grid-cols-2 gap-6">
                 <div class="space-y-2">
                     <label class="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Weight (kg)</label>

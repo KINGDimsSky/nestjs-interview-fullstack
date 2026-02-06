@@ -45,16 +45,29 @@ export class LaundryService {
     return transaction;
   }
 
-  async create(data: any) {
+  async create(data: CreateLaundryDto) {
   return this.prisma.transaction.create({
     data: {
-      weight: parseFloat(data.weight), 
-      price: parseFloat(data.price),   
+      weight: data.weight, 
+      price: data.price,   
       status: data.status,
-      customerId: parseInt(data.customerId), 
+      customerId : data.customerId
     },
   });
 }
+
+  async update(id : number, updateTransactionDTO : UpdateLaundryDto){
+    return this.prisma.transaction.update({
+      where : {
+        id : +id
+      },
+      data : {
+        weight : updateTransactionDTO.weight,
+        price : updateTransactionDTO.price,
+        status : updateTransactionDTO.status
+      }
+    })
+  }
 
   async remove (id : number) {
     return this.prisma.transaction.delete({

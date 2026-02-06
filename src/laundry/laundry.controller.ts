@@ -11,7 +11,7 @@ export class LaundryController {
   @Render('laundry')
   async findAll(@Query('search') searchQuery ?: string) {
     const transactions = await this.laundryService.findAll(searchQuery);
-    console.log('DATA DITEMUKAN:', transactions);
+    
     return {
       title : 'Dashboard Laundry',
       transactions : transactions,
@@ -31,8 +31,6 @@ export class LaundryController {
   async editpage(@Param('id') id : number) {
     const transaction = await this.laundryService.findOne(+id);
 
-    console.log ('Succesfully getting one Transaction', transaction);
-
     return {
       title : "Transaction Detail",
       transaction
@@ -41,8 +39,15 @@ export class LaundryController {
 
   @Post()
   @Redirect('/laundry')
-  async create(@Body() CreateLaundryDto: any) {
+  async create(@Body() CreateLaundryDto: CreateLaundryDto) {
     await this.laundryService.create(CreateLaundryDto);
+  }
+
+
+  @Patch(":id")
+  @Redirect('/laundry')
+  async updateTransaction (@Param('id') id : number, @Body() updateLaundryDto : UpdateLaundryDto) {
+    await this.laundryService.update(+id, updateLaundryDto)
   }
 
   @Delete(':id')

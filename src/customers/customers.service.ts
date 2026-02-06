@@ -8,7 +8,6 @@ export class CustomersService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: CreateCustomerDto) {
-    console.log ('Data customers Berhasil Dibuat' , data)
     return this.prisma.customer.create({
       data : {
         name : data.name,
@@ -32,8 +31,6 @@ export class CustomersService {
       }
     })
 
-    console.log ('Find 1 Customer Data', oneCustomer);
-
     return oneCustomer;
   }
 
@@ -48,8 +45,6 @@ export class CustomersService {
         address : updateCustomerDto.address
       }
     })
-
-    console.log ('Successfully Edited Customer Data', editedCustomer);
 
     return editedCustomer;
   }
