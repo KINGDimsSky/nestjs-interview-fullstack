@@ -1,4 +1,4 @@
-# ⚡ Interview Fullstack NestJS Dengan Topik LaundryDashboard
+# Interview Fullstack NestJS Dengan Topik LaundryDashboard
 
 Sistem Dashboard Laundry yang dibangun dengan arsitektur **Clean Code**, **Security-First**
 

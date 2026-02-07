@@ -1,0 +1,42 @@
+<div class="flex items-center justify-between mb-12">
+    <div>
+        <h1 class="text-4xl font-extrabold tracking-tight text-white">System Logs</h1>
+        <p class="text-zinc-500 font-medium">Audit trail untuk memantau integritas data sistem.</p>
+    </div>
+</div>
+
+<div class="bg-zinc-900/50 border border-zinc-800 rounded-3xl overflow-hidden backdrop-blur-md shadow-2xl">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-zinc-900/80 border-b border-zinc-800">
+                <tr>
+                    <th class="px-8 py-5 text-xs font-bold text-zinc-500 uppercase tracking-widest">Timestamp</th>
+                    <th class="px-8 py-5 text-xs font-bold text-zinc-500 uppercase tracking-widest">Admin ID</th>
+                    <th class="px-8 py-5 text-xs font-bold text-zinc-500 uppercase tracking-widest">Action</th>
+                    <th class="px-8 py-5 text-xs font-bold text-zinc-500 uppercase tracking-widest text-center">Entity</th>
+                    <th class="px-8 py-5 text-xs font-bold text-zinc-500 uppercase tracking-widest">Payload</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-zinc-800 font-mono text-sm">
+                {{#each logs}}
+                <tr class="hover:bg-zinc-800/40 transition-colors">
+                    <td class="px-8 py-4 text-zinc-500">{{this.createdAt}}</td>
+                    <td class="px-8 py-4 text-indigo-400 font-bold">#{{this.adminId}}</td>
+                    <td class="px-8 py-4">
+                        <span class="px-3 py-1 rounded-lg text-[10px] font-black 
+                            {{#if (eq this.action 'POST')}} bg-emerald-500/10 text-emerald-500 
+                            {{else if (eq this.action 'PATCH')}} bg-amber-500/10 text-amber-500 
+                            {{else}} bg-red-500/10 text-red-500 {{/if}}">
+                            {{this.action}}
+                        </span>
+                    </td>
+                    <td class="px-8 py-4 text-zinc-300 text-center uppercase text-xs">{{this.entity}} (ID:{{this.entityId}})</td>
+                    <td class="px-8 py-4 text-zinc-600 max-w-xs truncate" title="{{this.newData}}">
+                        {{this.newData}}
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

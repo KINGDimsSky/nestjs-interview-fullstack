@@ -8,6 +8,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { GlobalExceptionFilter } from './common/filters/http-exception.filter';
 import cookieParser from 'cookie-parser';
 import { UserInterceptor } from './common/interceptors/user.interceptor';
+import { PrismaService } from './prisma/prisma.service';
+import { AuditLoggingInterceptor } from './common/interceptors/logging.interceptor';
 
 const hbs = require('hbs');
 
@@ -22,7 +24,9 @@ async function bootstrap() {
     whitelist : true,
   }))
 
-  app.useGlobalInterceptors(new UserInterceptor());
+
+  const prismaService = app.get(PrismaService);
+  app.useGlobalInterceptors(new UserInterceptor(), new AuditLoggingInterceptor(prismaService));
 
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.use(cookieParser());
