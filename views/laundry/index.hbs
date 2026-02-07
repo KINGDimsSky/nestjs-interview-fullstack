@@ -1,4 +1,4 @@
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
     <div>
         <h1 class="text-4xl font-extrabold tracking-tight mb-2 text-white">Transactions</h1>
         <p class="text-zinc-400 font-medium">Monitoring operasional laundry secara real-time.</p>
@@ -6,6 +6,28 @@
     <a href="/laundry/create" class="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3.5 rounded-2xl font-bold shadow-xl shadow-indigo-600/20 transition-all active:scale-95 text-center">
         + New Order
     </a>
+</div>
+
+<div class="bg-zinc-900/50 border border-zinc-800 p-4 rounded-3xl mb-8 backdrop-blur-md shadow-xl">
+    <form action="/laundry" method="GET" class="flex flex-col sm:flex-row gap-4">
+        <div class="relative flex-grow">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+            <input type="text" name="search" value="{{search}}" placeholder="Cari nama pelanggan..." 
+                   class="w-full pl-11 pr-4 py-3.5 bg-zinc-950 border border-zinc-800 rounded-2xl focus:ring-2 focus:ring-indigo-600 outline-none text-zinc-100 transition-all placeholder-zinc-600">
+        </div>
+        <button type="submit" class="bg-zinc-100 text-zinc-950 px-8 py-3.5 rounded-2xl hover:bg-white transition font-bold shadow-lg active:scale-95">
+            Search
+        </button>
+        {{#if search}}
+        <a href="/laundry" class="bg-zinc-800 text-zinc-400 px-6 py-3.5 rounded-2xl hover:bg-zinc-700 hover:text-white transition font-bold text-center">
+            Clear
+        </a>
+        {{/if}}
+    </form>
 </div>
 
 <div class="bg-zinc-900/50 border border-zinc-800 rounded-3xl overflow-hidden backdrop-blur-md shadow-2xl">
@@ -45,12 +67,21 @@
                     </div>
                 </td>
             </tr>
+            {{else}}
+             <tr>
+                <td colspan="5" class="px-8 py-20 text-center text-zinc-500 italic">
+                    {{#if search}}
+                        Data tidak ditemukan untuk kata kunci "{{search}}"
+                    {{else}}
+                        Belum ada data transaksi.
+                    {{/if}}
+                </td>
+            </tr>
             {{/each}}
         </tbody>
     </table>
 </div>
 
-{{!-- Delete Modal --}}
 <div id="deleteModal" class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-xl flex items-center justify-center p-4">
     <div class="bg-zinc-900 border border-zinc-800 rounded-[2.5rem] max-w-sm w-full p-10 text-center shadow-2xl">
         <div class="w-20 h-20 bg-red-500/10 text-red-500 rounded-3xl flex items-center justify-center mx-auto mb-6 border border-red-500/20">

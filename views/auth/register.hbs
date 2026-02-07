@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | KING LAUNDRY</title>
+    <title>Register | KING LAUNDRY</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
@@ -18,6 +18,11 @@
 
         <div class="bg-zinc-900 border border-zinc-800 rounded-[2.5rem] p-10 shadow-2xl backdrop-blur-md">
             <form action="register" method="POST" class="space-y-6">
+                 {{#if error}}
+                  <div class="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-2xl flex items-center gap-3 animate-pulse">
+                    <span class="text-sm font-bold text-red-400">{{error}}</span>
+                  </div>
+                {{/if}}
                 <div class="space-y-2">
                     <label class="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Username</label>
                     <input type="text" name="username" required 

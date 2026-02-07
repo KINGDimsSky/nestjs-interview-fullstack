@@ -19,16 +19,24 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() body: any, @Res() res: Response) {
-    const token = await this.authService.login(body.username, body.password);
-    
-    res.cookie('access_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), 
-    });
-
-    return res.redirect('/laundry');
+    try {
+      const token = await this.authService.login(body.username, body.password);
+      
+      res.cookie('access_token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), 
+      });
+  
+      return res.redirect('/laundry');
+    }catch (error) {
+      return res.render('auth/login', {
+        title : 'Login Admin',
+        layout : false,
+        error : 'Username or Password incorreect!'
+      })
+    }
   }
 
   @Get('logout')
@@ -48,8 +56,17 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() body: any, @Res() res: Response) {
-    await this.authService.create(body.username, body.password);
-    return res.redirect('/auth/login');
+    try {
+      await this.authService.create(body.username, body.password);
+
+      return res.redirect('/auth/login');
+    } catch(error) {
+      return res.render('auth/register', {
+        title : 'Register Admin',
+        layout : false,
+        error : error.message || 'Gagal Register, coba pakai username lain!'
+      })
+    }
   }
   
   @Get()

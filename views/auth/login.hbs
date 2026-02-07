@@ -18,6 +18,11 @@
 
         <div class="bg-zinc-900 border border-zinc-800 rounded-[2.5rem] p-10 shadow-2xl backdrop-blur-md">
             <form action="login" method="POST" class="space-y-6">
+                {{#if error}}
+                  <div class="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-2xl flex items-center gap-3 animate-pulse">
+                    <span class="text-sm font-bold text-red-400">{{error}}</span>
+                  </div>
+                {{/if}}
                 <div class="space-y-2">
                     <label class="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Username</label>
                     <input type="text" id="username" name="username" required 
