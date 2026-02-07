@@ -41,12 +41,12 @@ model Transaction {
 
 model ActivityLog {
   id        Int      @id @default(autoincrement())
-  adminId   Int?     // Siapa yang melakukan (null jika sistem)
-  action    String   // "CREATE", "UPDATE", "DELETE"
-  entity    String   // "Customer" atau "Transaction"
+  adminId   Int?     
+  action    String   
+  entity    String   
   entityId  Int
-  oldData   String?  // JSON string data sebelum berubah
-  newData   String?  // JSON string data sesudah berubah
+  oldData   String? 
+  newData   String?  
   createdAt DateTime @default(now())
 }
 
